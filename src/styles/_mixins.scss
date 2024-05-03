@@ -1,0 +1,86 @@
+@use "functions" as func;
+@use 'variables' as var;
+
+@mixin physicalButton(
+  $width: 90,
+  $height: 26,
+  $padding: 0,
+  $color: #454344,
+  $fontSize: 0.9rem
+) {
+  $color-darker: darken($color, 20%);
+  $line-height: $height - 2;
+
+  $widthPx: #{$width}px;
+
+  @if ($width == auto) {
+    $widthPx: auto;
+  }
+
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  margin: 10% 2px;
+  border-radius: 3px;
+  border: none;
+  border-top: 1px solid $color-darker;
+  border-bottom: 4px solid $color-darker;
+  border-right: 1px solid $color-darker;
+  background: $color;
+  padding: $padding;
+  width: $widthPx;
+  height: #{$height}px;
+  line-height: #{$line-height}px;
+  font-size: $fontSize;
+  color: lighten($color, 60%);
+  text-shadow: 1px -1px 0 var.$dark;
+  text-transform: uppercase;
+  font-family: "Sofia Sans Condensed", sans-serif;
+  transition: all 0.15s ease-out;
+
+  &:disabled {
+    cursor: not-allowed;
+    border-top-width: 3px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+
+  &:hover:not(:disabled) {
+    border-bottom-width: 3px;
+    border-top-width: 2px;
+  }
+
+  &:active {
+    border-top-width: 3px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+}
+
+@mixin triangle(
+  $direction,
+  $color: var.$red--350,
+  $strokeColor: var.$red--350,
+  $size: 50
+) {
+  $encodedColor: func.encodecolor($color);
+  $encodedStrokeColor: func.encodecolor($strokeColor);
+
+  $points: "0,#{$size} #{$size/2},0 #{$size},#{$size}";
+
+  @if $direction == up {
+    $points: "0,#{$size} #{$size/2},0 #{$size},#{$size}";
+  } @else if $direction == down {
+    $points: "0,0 #{$size/2},#{$size} #{$size},0";
+  } @else if $direction == left {
+    $points: "#{$size},0 0,#{$size/2} #{$size},#{$size}";
+  } @else if $direction == right {
+    $points: "0,0 #{$size},#{$size/2} 0,#{$size}";
+  } @else {
+    @error "Invalid direction for triangle mixin: #{$direction}. Use 'up', 'down', 'left', or 'right'.";
+  }
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='#{$size}' height='#{$size}'%3E%3Cpolygon stroke='#{$encodedStrokeColor}' stroke-width='1px' points='#{$points}' fill='#{$encodedColor}'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
+}

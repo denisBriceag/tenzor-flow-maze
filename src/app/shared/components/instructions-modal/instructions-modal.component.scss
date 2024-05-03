@@ -1,0 +1,220 @@
+@use 'variables' as var;
+@use 'mixins' as mixins;
+@use 'breakpoints' as breakponts;
+
+$border-width: 1.5vw;
+$border-width--inset: 0.8vw;
+
+:host {
+  display: block;
+  position: relative;
+  font-family: 'Press Start 2P', cursive;
+  min-width: 60vw;
+  min-height: 50vh;
+  font-size: 0.6em;
+  line-height: 2em;
+  overflow: auto;
+  border: $border-width solid var.$blue;
+  box-shadow: inset 0 0 0 $border-width--inset var.$blue--90;
+  //background-color: var.$blue--65;
+  background: radial-gradient(circle, var.$blue--65 0%, white 50%, var.$blue--65 100%);
+  color: var.$dark;
+  box-sizing: border-box;
+}
+
+.instructions {
+  margin: $border-width--inset;
+  padding: 4em;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  height: calc(100% - $border-width--inset * 2);
+
+  &__close {
+    position: absolute;
+    top: 2vw;
+    right: 2vw;
+    background: none;
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    color: var.$red;
+    text-shadow: 1px 1px 0 var.$dark;
+    cursor: pointer;
+    transition: color 0.2s ease-out, text-shadow 0.2s ease-out;
+    &:hover {
+      color: var.$red--200;
+      text-shadow: 1px 1px 5px var.$red;
+    }
+  }
+
+  &__setup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__video {
+    border: 10px solid var.$green;
+    box-shadow: inset 0 0 0 5px var.$green--90;
+    width: fit-content;
+    padding: 5px 5px 0 5px;
+    box-sizing: border-box;
+    position: relative;
+
+    &::after {
+      content: '✔';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      background: linear-gradient(to bottom, var.$green, var.$green--90);
+      color: white;
+      font-size: 4em;
+      transition: opacity 0.3s ease-out;
+    }
+
+    &--initialized {
+      &::after {
+        opacity: 0.6;
+      }
+    }
+
+    video {
+      transform: scaleX(-1);
+    }
+  }
+
+  &__play {
+    @include mixins.physicalButton(
+      $height: 50,
+      $width: 350,
+      $color: var.$green,
+      $fontSize: 1.2rem
+    );
+
+    margin: 1em 0;
+    max-width: 100%;
+
+    &[disabled] {
+      filter: grayscale(100%);
+    }
+  }
+
+  &__accordion {
+    &__trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: none;
+      border-bottom: 2px solid var.$blue;
+      font-family: 'Press Start 2P', cursive;
+      background-color: transparent;
+      padding: 2em 1.5em;
+      width: 100%;
+      text-align: left;
+      color: var.$blue;
+      text-shadow: none;
+      transition: background-color 0.2s ease-out, text-shadow 0.2s ease-out,
+      color 0.2s ease-out;
+      cursor: pointer;
+
+      &__icon {
+        display: block;
+        width: 10px;
+        height: 10px;
+        transform: rotate(0);
+        transition: transform 0.2s ease-out;
+        margin-right: 1em;
+        @include mixins.triangle(
+          $direction: right,
+          $size: 10,
+          $color: var.$blue,
+          $strokeColor: var.$blue
+        );
+      }
+
+      &:hover,
+      &--expanded {
+        background-color: var.$blue--90;
+        color: white;
+        text-shadow: 1px 1px 0 var.$dark;
+        .instructions__accordion__trigger__icon {
+          transform: rotate(90deg);
+          @include mixins.triangle(
+            $direction: right,
+            $size: 10,
+            $color: white,
+            $strokeColor: var.$dark
+          );
+        }
+      }
+    }
+    &__panel {
+      overflow: hidden;
+      padding: 0 1.5em;
+    }
+  }
+}
+
+ul {
+  list-style: none;
+  li {
+    &::before {
+      content: '◇';
+      margin-right: 0.5em;
+    }
+  }
+}
+
+h1 {
+  font-size: 2.2em;
+  line-height: 2em;
+  text-transform: uppercase;
+  color: var.$yellow;
+  text-shadow: 1px 1px 0 var.$dark;
+}
+
+h2 {
+  font-size: 2em;
+  line-height: 2em;
+  text-transform: uppercase;
+  color: var.$green;
+  text-shadow: 1px 1px 0 var.$dark;
+  margin-top: 1em;
+}
+
+p {
+  margin: 2em 0;
+}
+
+a {
+  color: var.$blue;
+  transition: text-shadow 0.2s ease-out, border-width 0.2s ease-out;
+  text-decoration: none;
+  border-bottom: 1px solid var.$blue;
+
+  &:hover {
+    text-shadow: 0 0 1px darken(var.$blue, 20%);
+    border-bottom-width: 2px;
+  }
+
+  &:visited {
+    color: var.$purple;
+    border-color: var.$purple;
+
+    &:hover {
+      text-shadow: 0 0 1px darken(var.$purple, 20%);
+    }
+  }
+}
+
+@include breakponts.media(breakponts.$phone) {
+  :host {
+    font-size: 0.5em;
+  }
+}

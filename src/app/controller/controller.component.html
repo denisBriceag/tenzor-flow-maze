@@ -1,0 +1,14 @@
+<div class="middle">
+  <div class="middle__top">Maze</div>
+  <div class="middle__instructions">
+    <button type="button" (click)="showInstructions()">Instructions</button>
+  </div>
+  <div class="middle__bottom"></div>
+  <div class="middle__buttons">
+    <app-control-buttons></app-control-buttons>
+  </div>
+</div>
+
+<app-arrows [direction]="direction"></app-arrows>
+
+<app-webcam (detectedDirectionChange)="directionChange($event)"></app-webcam>

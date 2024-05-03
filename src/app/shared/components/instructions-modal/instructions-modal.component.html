@@ -1,0 +1,53 @@
+<div class="instructions" #scrollContainer>
+  <h1>Welcome to Maze using Angular and TensorFlow.js!</h1>
+  <h3>
+    This game demonstrates the power of combining Angular and TensorFlow.js to
+    build highly interactive and reactive applications. To play, we need access
+    to your camera as your hand is the controller!
+  </h3>
+
+  <h2>How to Play</h2>
+
+  <h3>
+    To manage direction, use only 1-hand (preferablly your right) and a single
+    digit (thumb or index finger recommended) to point in the direction that you
+    want to go.
+  </h3>
+
+  <ng-container *ngIf="data?.show">
+    <h3>Give it a try by pointing to the right and let’s play!</h3>
+
+    <div class="instructions__setup">
+      <div
+        class="instructions__video"
+        [ngClass]="{ 'instructions__video--initialized': controlsInitialized }"
+      >
+        <video
+          snakeCameraFeed
+          snakeHandDetector
+          width="320"
+          height="240"
+          (directionChange)="directionChange($event)"
+        ></video>
+      </div>
+
+      <button
+        [disabled]="!controlsInitialized"
+        class="instructions__play"
+        type="button"
+        (click)="play()"
+      >
+        Play
+      </button>
+    </div>
+  </ng-container>
+
+  <button
+    *ngIf="!data?.show"
+    class="instructions__close"
+    type="button"
+    (click)="close()"
+  >
+    &times;
+  </button>
+</div>

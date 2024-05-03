@@ -1,0 +1,85 @@
+// base colors
+$light: #ffffff;
+$gray: #e8eaed;
+$blue: #428eff;
+$green: #38a851;
+$red: #ff5145;
+$yellow: #ffbb00;
+$orange: #e6911f;
+$dark: #202124;
+$purple: #841ae7;
+$pink: #ff379b;
+
+// derived colors
+$red--110: darken($red, 10%);
+$red--150: darken($red, 15%);
+$red--200: darken($red, 20%);
+$red--250: darken($red, 25%);
+$red--300: darken($red, 30%);
+$red--350: darken($red, 35%);
+$red--desaturated: #df3416;
+
+$blue--110: darken($blue, 10%);
+$blue--95: lighten($blue, 5%);
+$blue--90: lighten($blue, 10%);
+$blue--85: lighten($blue, 15%);
+$blue--70: lighten($blue, 30%);
+$blue--65: lighten($blue, 35%);
+
+$green--90: lighten($green, 10%);
+
+$orange--saturated: #e66020;
+$orange--desaturated: #fea26d;
+
+$dark--contrast: #515151;
+
+// color palettes
+$primary-palette: (
+  50: lighten($blue, 50%),
+  100: lighten($blue, 40%),
+  200: lighten($blue, 30%),
+  300: lighten($blue, 20%),
+  400: lighten($blue, 10%),
+  500: $blue,
+  600: darken($blue, 10%),
+  700: darken($blue, 20%),
+  800: darken($blue, 30%),
+  900: darken($blue, 40%),
+  contrast: (
+    50: $dark,
+    100: $dark,
+    200: $dark,
+    300: $light,
+    400: $light,
+    500: $light,
+    600: $light,
+    700: $light,
+    800: $light,
+    900: $light,
+  ),
+);
+
+$accent-palette: (
+  50: lighten($yellow, 50%),
+  100: lighten($yellow, 40%),
+  200: lighten($yellow, 30%),
+  300: lighten($yellow, 20%),
+  400: lighten($yellow, 10%),
+  500: $yellow,
+  600: darken($yellow, 10%),
+  700: darken($yellow, 20%),
+  800: darken($yellow, 30%),
+  900: darken($yellow, 40%),
+  contrast: (
+    50: $dark,
+    100: $dark,
+    200: $dark,
+    300: $dark,
+    400: $dark,
+    500: $dark,
+    600: $dark,
+    700: $dark,
+    800: $light,
+    900: $light,
+  ),
+);
