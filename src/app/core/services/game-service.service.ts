@@ -20,6 +20,9 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 })
 export class GameService extends GameBaseService {
   // TODO ADD SPEED
+
+  speed$ = new BehaviorSubject<number>(15);
+
   readonly #cols: number = 20;
   readonly #rows: number = 20;
   readonly #cellSize: number = 20;

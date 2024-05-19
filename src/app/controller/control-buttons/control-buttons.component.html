@@ -1,3 +1,16 @@
+<div
+  (click)="reduceSpeed()"
+  class="arrow-buttons__button arrow-buttons__button--left"
+></div>
+
+<h2 class="speed arrow-buttons__button">
+  {{ 10 - ((gameService.speed$ | async) ?? 1) / 2 ?? 1 | number: "1.0-0" }}
+</h2>
+
+<div
+  (click)="increaseSpeed()"
+  class="arrow-buttons__button arrow-buttons__button--right"
+></div>
 
 <button (click)="resetGame()" title="Reset game!" [disabled]="gameRunning">
   reset

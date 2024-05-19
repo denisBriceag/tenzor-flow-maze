@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, DestroyRef, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { Cell, Direction, Maze } from '../../core';
 import { GameService } from '../../core/services/game-service.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,7 +16,7 @@ import { filter, tap } from 'rxjs';
   templateUrl: './gameboard.component.html',
   styleUrl: './gameboard.component.scss',
 })
-export class GameboardComponent implements AfterViewInit {
+export class GameboardComponent implements OnInit, AfterViewInit {
   #destroyRef = inject(DestroyRef);
   row = 12;
   col = 12;
@@ -23,7 +29,15 @@ export class GameboardComponent implements AfterViewInit {
   private currentCell: Cell = {} as Cell;
   private calc = 0;
 
+  private speed = 15;
+
   constructor(protected readonly gameService: GameService) {}
+
+  ngOnInit(): void {
+    this.gameService.speed$.subscribe((speed) => {
+      this.speed = speed;
+    });
+  }
 
   ngAfterViewInit() {
     this.canvas = <HTMLCanvasElement>document.getElementById('maze');
@@ -36,7 +50,7 @@ export class GameboardComponent implements AfterViewInit {
     this.gameService.directionState
       .pipe(
         tap((val: Direction) => (this.calc = this.calc + 1)),
-        filter(() => !(this.calc % 15)),
+        filter(() => !(this.calc % this.speed)),
         tap((val: Direction) => this.move(val)),
         takeUntilDestroyed(this.#destroyRef),
       )

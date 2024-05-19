@@ -1,7 +1,7 @@
-@use 'variables' as var;
-@use 'mixins' as mixins;
-@use 'breakpoints' as breakpoints;
-@use 'functions' as func;
+@use "variables" as var;
+@use "mixins" as mixins;
+@use "breakpoints" as breakpoints;
+@use "functions" as func;
 
 $color-dark: #454344;
 $color-darker: #231c1b;
@@ -13,7 +13,7 @@ $color-darker: #231c1b;
   border-radius: 8px;
   &::before {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     left: 3.5%;
     top: 6px;
@@ -28,10 +28,10 @@ $color-darker: #231c1b;
     top: 0;
     right: 0;
     bottom: 0;
-    content: '';
+    content: "";
     display: block;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 35.746 13.794'%3E%3Cpath fill='#{func.encodecolor(var.$red)}' d='M3.03 12.481s-1.812.145-1.812-1.811V3.125s.028-1.812 1.812-1.812h21.754L3.011 2.08s-1.153-.072-1.153 1.442v7.282s.18 1.263 1.172 1.677M18.873 12.534l13.844-.053s1.811 0 1.811-1.812V3.306l-.54 7.21s-.047 1.37-1.49 1.37c-1.009 0-13.625.648-13.625.648'/%3E%3C/svg%3E%0A")
-    center center no-repeat;
+      center center no-repeat;
     background-size: cover;
   }
 }
@@ -50,4 +50,76 @@ button {
     display: block;
     margin: 5px 0;
   }
+}
+
+.arrow-buttons {
+  top: 50%;
+  left: 6%;
+  z-index: 2;
+  max-height: 80%;
+  max-width: 25%;
+  aspect-ratio: 1/1;
+  transform: translateY(-50%);
+  position: relative;
+  &__button {
+    width: 33.333%;
+    height: 33.333%;
+    position: absolute;
+    box-sizing: border-box;
+    transition:
+      box-shadow 0.5s ease-out,
+      border 0.5s ease-out;
+    border: 0 solid transparent;
+    background-size: 30%;
+    &--top {
+      @include mixins.triangle(up);
+      top: 1px;
+      left: 33.333%;
+      border-top-right-radius: 15%;
+      border-top-left-radius: 15%;
+    }
+    &--bottom {
+      @include mixins.triangle(down);
+      bottom: 1px;
+      left: 33.333%;
+      border-bottom-left-radius: 15%;
+      border-bottom-right-radius: 15%;
+    }
+    &--left {
+      @include mixins.triangle(left);
+      top: 33.333%;
+      left: 0;
+      border-bottom-left-radius: 15%;
+      border-top-left-radius: 15%;
+    }
+    &--right {
+      @include mixins.triangle(right);
+      top: 33.333%;
+      right: 1px;
+      border-bottom-right-radius: 15%;
+      border-top-right-radius: 15%;
+    }
+
+    &--center {
+      top: 33.333%;
+      left: 33.333%;
+    }
+  }
+}
+
+.arrow-buttons__button {
+  top: -185%;
+}
+.speed {
+  width: unset;
+}
+
+.arrow-buttons__button--left:hover {
+  @include mixins.triangle(left, var.$orange);
+  cursor: pointer;
+}
+
+.arrow-buttons__button--right:hover {
+  @include mixins.triangle(right, var.$orange);
+  cursor: pointer;
 }
